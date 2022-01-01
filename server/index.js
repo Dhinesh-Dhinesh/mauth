@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 app.use(cors())
 app.use(express.json())
 
+const jwt = require('jsonwebtoken');
+
 //Mongoose----------
 //*Mongose schemas
 
@@ -47,15 +49,14 @@ app.post('/reg', async (req, res) => {
             password: req.body.password
         })
 
-
-
         res.json({ status: 'ok' })
     } catch (err) {
         res.json({ status: 'error' , error: "Duplicate email"})
+        console.log(err)
     }
 })
 //*--------------------------------
-//!Login
+//!Login 
 app.post('/login', async (req, res) => {
     const user = await User.findOne({
         email: req.body.email,
